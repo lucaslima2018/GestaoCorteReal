@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+	<meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="resourses/_css/estilo.css"/>
+    <link rel="stylesheet" type="text/css" href="resources/_css/form.css git checkout">
+</head>
+<script src="_javaScript/funcoes.js"></script>
+<style type="text/css">
+	.footer {
+		  background-color: lightcoral;
+		  width: 99%;
+		  color: aliceblue;	
+		  height: 50px;
+		  padding: 5px;
+		  margin: 10px 0;
+	}
+
+	.cabecalho {
+		background-color: lightcoral;
+		  width: 99%;
+		  color: aliceblue;
+		  height: 50px;
+		  padding: 5px;
+		  margin: 10px 0;
+	}
+</style>
+<body>
+<div id="interface">
+    <header id="cabecalho">
+    	<hgroup>
+			<div id="div2" class="cabecalho">
+	
+				<h2>Corte Real Enxovais</h2>
+		
+			</div>
+    	</hgroup>
+		<nav id="menu">
+			<h1>Menu Principal</h1>
+			<ul>
+				<li><a href="index.html">Home</a> </li>
+			    <li><a href="cadastro.html">Cadastrar</a> </li>
+			    <li><a href="consulta.html">Consultar</a></li>
+			    <li><a href="alteracao.html">Alterar</a></li>
+			    <li><a href="exclusao.html">Excluir</a></li>    
+			</ul>
+		</nav>
+		<br/>
+	</header>
+	<figure class="foto_legenda">
+		<img src="resourses/_imagens/Logotipo_Corte_Real_Enxovais.png"/>
+		<figcaption>
+    		<h3>Corte Real Enxovais</h3>
+    		<p>Variedades em cama, mesa, banho e decoração</p>
+		</figcaption>
+	</figure>
+
+	<form id="form1" name="form1" method="POST" action="doPostAlterar">
+		<fieldset id="alteracao"><legend><b>Alteração dos Dados do Produto</b></legend>
+			<table width="600" border="0" cellspacing="0" cellpadding="20">
+				<tr>
+					<td width="161" class="texto"><strong>Descrição:</strong></td>
+					<td width="359">
+						<input name="descricao" type="text" class="texto" id="descricao" size="40" placeholder="Informe a Descrição" />
+					</td>
+				</tr>
+				<tr>
+					<td class="texto"><strong>Código de Barras:</strong></td>
+					<td><input name="codigo" type="text" class="texto" id="codigodebarras" size="40" placeholder="Código de Barras" /></td>
+				</tr>
+				<tr>
+					<td class="texto"><strong>Quantidade:</strong></td>
+					<td><input name="quantidade" type="text" class="texto" id="quantidade" size="40" placeholder="Quantidade" /></td>
+				</tr>
+				<tr>
+					<td>&nbsp;</td>
+					<td><label>
+						<input name="alterar" type="submit" class="texto" id="alterar" value="Alterar" />
+					</label></td>
+				</tr>
+			</table>
+		</fieldset>
+	</form>
+
+
+	<div id="div2" class="footer">
+	
+			<h2>Copyright&#169 2021 by Lucas Lima</h2>
+	
+	</div>
+</div>
+</body>
+</html>

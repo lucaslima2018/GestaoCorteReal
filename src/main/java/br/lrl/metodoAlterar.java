@@ -2,20 +2,20 @@ package br.lrl;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet("/ServletProduto")
-public class ServletProduto extends HttpServlet{
+import com.mysql.jdbc.Connection;
+import com.mysql.jdbc.Statement;
+
+@WebServlet("/doPostAlterar")
+public class metodoAlterar extends ServletProduto{
 
 private static final long serialVersionUID = 1L;
 	
@@ -27,7 +27,7 @@ private static final long serialVersionUID = 1L;
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ServletProduto() {
+    public metodoAlterar() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -36,82 +36,33 @@ private static final long serialVersionUID = 1L;
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
     
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.setContentType("text/html");
-		response.setCharacterEncoding("UTF-8");
-		
-		conectar();
-		
-		
-		PrintWriter out = response.getWriter();
-		
-		out.println("<html>\r\n");
-		out.println("<meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\">");
-		out.println("<body>");
-
-		//EXIBIR TODOS OS PRODUTOS CADASTRADOS NO BD
-		
-		try {
-			out.println("<h2>Lista de Produtos cadastrados no banco de dados</h2>");
-            rs = statement.executeQuery("SELECT * FROM produto");
-        } catch (Exception ex) {
-            System.out.println("Exception: " + ex.getMessage());
-        }
-		
-
-		if (rs != null) {
-            try {
-                while (rs.next()) {
-                	out.println("<p>================================</p>");
-                    out.println("<strong>Descrição: </strong>" + rs.getString("descricao") + "<br>");
-                    out.println("<strong>Código de Barras: </strong>" + rs.getString("codigodebarras") + "<br>");
-                    out.println("<strong>Quantidade: </strong>" + rs.getString("quantidade") + "<br>");
-                    out.println("<p>================================</p>");
-                }
-            } catch (SQLException e) {
-                System.out.println(e);
-            }
-        }
-		
-		out.println("<a href=\"index.html\">\r\n"
-				+ "        <input type=\"button\" value=\"Página Inicial\">\r\n"
-				+ "    </a>");
-		out.println("</body>\r\n");
-		out.println("</html>");
-		
-	}
-
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
+	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String descricao = request.getParameter("descricao");
 		double codigodebarras = Double.parseDouble(request.getParameter("codigo"));
-		int quantidade = Integer.parseInt(request.getParameter("quantidade"));
-		
+		String quantidade = request.getParameter("quantidade"); 
 		conectar();
 		
-		// INSERIR O PRODUTO
-		String query = "INSERT INTO produto(descricao, codigodebarras, quantidade) "
-                + "values ('"+descricao+"', '"+codigodebarras+"', '"+quantidade+"')";
-        int status = executeUpdate(query);
-		
+		System.out.println(descricao);
+
+		String query = "UPDATE produto SET descricao='" + descricao + "', codigodebarras='" + codigodebarras + "', quantidade='" + quantidade + "' WHERE descricao='"+descricao+"'";
+	    int status = executeUpdate(query);
 		
 		response.setContentType("text/html");
 		response.setCharacterEncoding("UTF-8");
 		PrintWriter out = response.getWriter();
 		
-		out.println("<html lang=\"pt-br>\r\n");
+		out.println("<html lang=\"pt-br\r\n");
 		out.println("<meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\">");
 		out.println("<body>");
 		if (status == 1) {
-			out.println("<h3>O Produto "+ descricao + " foi cadastrado com sucesso!</h3>");
+			out.println("<h3>O produto "+ descricao + " foi alterado com sucesso!</h3>");
 		}
+		
 		
 		try {
 			out.println("<h2>Lista de Produtos cadastrados no banco de dados</h2>");
-            rs = statement.executeQuery("SELECT * FROM produto WHERE descricao='"+descricao+"'");
+            rs = statement.executeQuery("SELECT * FROM produto WHERE descricao='" + descricao +"'");
         } catch (Exception ex) {
             System.out.println("Exception: " + ex.getMessage());
         }
@@ -136,8 +87,9 @@ private static final long serialVersionUID = 1L;
 				+ "    </a>");
 		out.println("</body>\r\n");
 		out.println("</html>");
-	}	
 		
+		
+	} 
 	
 	private void conectar() {
     	try {
@@ -148,8 +100,8 @@ private static final long serialVersionUID = 1L;
 			String password = "root";
 			
 			Class.forName("com.mysql.jdbc.Driver");
-			connection = DriverManager.getConnection("jdbc:mysql://"+ address + ":" + port +"/"+ dataBaseName + "?user=" + user + "&password=" + password + "&useTimezone=true&serverTimezone=UTC"); 
-			statement = connection.createStatement();
+			connection = (Connection) DriverManager.getConnection("jdbc:mysql://"+ address + ":" + port +"/"+ dataBaseName + "?user=" + user + "&password=" + password + "&useTimezone=true&serverTimezone=UTC"); 
+			statement = (Statement) connection.createStatement();
 			
         } catch (Exception ex) {
             System.out.println("Exception: " + ex.getMessage());
@@ -157,11 +109,11 @@ private static final long serialVersionUID = 1L;
     	
     }
 	
-	// Para inserção alteração e exclusão   
+	// Para inserções, alterações e exclusões   
     public int executeUpdate(String query) {     
         int status = 0;
         try {
-        	statement = connection.createStatement();           
+        	statement = (Statement) connection.createStatement();           
             status = statement.executeUpdate(query);
         } catch (Exception ex) {
             System.out.println("Exception: " + ex.getMessage());
@@ -172,7 +124,7 @@ private static final long serialVersionUID = 1L;
     // Para consultas
     public ResultSet executeQuery(String query) {
         try {
-        	statement = connection.createStatement();
+        	statement = (Statement) connection.createStatement();
             rs = statement.executeQuery(query);
         } catch (SQLException ex) {
             System.out.println("Exception: " + ex.getMessage());
@@ -181,4 +133,3 @@ private static final long serialVersionUID = 1L;
     }
 
 }
-
