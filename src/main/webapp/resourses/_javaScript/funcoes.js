@@ -1,3 +1,3 @@
 function trocaIcone(foto){
-    document.getElementById("icone").src = foto;
+    document.getElementById("exclusao").src = foto;
 }

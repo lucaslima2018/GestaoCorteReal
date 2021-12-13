@@ -60,3 +60,27 @@ nav#menu {
  nav#menu h1{
      display: none;
  }
+ 
+ fieldset{
+	border: 4px #f08080 solid;
+}
+
+fieldset#cadastro{
+	 background: url("../_imagens/add.png") no-repeat 95% 95%;
+	 background-size: 200px;
+}
+
+fieldset#consulta{
+	 background: url("../_imagens/search.png") no-repeat 95% 95%;
+	 background-size: 130px;
+}
+
+fieldset#alteracao{
+	 background: url("../_imagens/edit.png") no-repeat 95% 95%;
+	 background-size: 200px;
+}
+
+fieldset#exclusao{
+	 background: url("../_imagens/trash.png") no-repeat 95% 95%;
+	 background-size: 130px;
+}

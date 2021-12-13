@@ -55,11 +55,11 @@
 		</figcaption>
 	</figure>
 
-	<form id="form1" name="form1" method="POST" action="doPostDelete">
+	<form id="fexclusao" name="fexclusao" method="POST" action="doPostDelete">
 		<fieldset id="exclusao"><legend><b>Exclusão de Produto</b></legend>
 			<table width="600" border="0" cellspacing="0" cellpadding="20">
 				<tr>
-					<td width="161" class="texto"><strong>Descrição:</strong></td>
+					<td width="161" class="texto"><label for="descricao"><strong>Descrição:</strong></label></td>
 					<td width="359">
 						<input name="descricao" type="text" class="texto" id="descricao" size="40" placeholder="Informe a Descrição" />
 					</td>
@@ -67,7 +67,7 @@
 				<tr>
 					<td>&nbsp;</td>
 					<td><label>
-						<input name="excluir" type="submit" class="texto" id="excluir" value="Excluir" />
+						<input onclick="trocaIcone('../_imagens/trashfull.png')" name="excluir" type="submit" class="texto" id="excluir" value="Excluir" />
 					</label></td>
 				</tr>
 			</table>
